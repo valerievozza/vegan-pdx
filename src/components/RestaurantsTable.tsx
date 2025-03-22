@@ -25,7 +25,7 @@ export default function RestaurantsTable() {
   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
   
   useEffect(() => {
-    fetch('http://localhost:5000/api/restaurants')
+    fetch('/.netlify/functions/get-restaurants')
       .then(res => res.json())
       .then((data: Restaurant[]) => {
         setRestaurants(data);

@@ -8,8 +8,9 @@
     "dev-client": "vite",
     "dev": "concurrently \"npm run dev-server\" \"npm run dev-client\"",
     "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
+    "start:prod": "node dist/server.js",
+    "preview": "vite preview",
+    "lint": "eslint ."
   },
   "dependencies": {
     "@fontsource/roboto": "^5.2.5",

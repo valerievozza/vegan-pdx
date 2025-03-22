@@ -5,6 +5,7 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 
 export default function RestaurantsTable() {
@@ -36,37 +37,45 @@ export default function RestaurantsTable() {
   console.log('restaurants', restaurants)
 
   return (
-    <TableContainer component={Paper}>
-      <Table
-        sx={{ minWidth: 650 }}
-        aria-label="restaurants table"
-      >
-        <TableHead>
-          <TableRow>
-            <TableCell>Name</TableCell>
-            <TableCell>Brunch?</TableCell>
-            <TableCell>Food Cart?</TableCell>
-            <TableCell>Vegan?</TableCell>
-            <TableCell>Notes</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {restaurants.map((restaurant) => (
-            <TableRow
-              key={restaurant.name}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-              <TableCell component="th" scope="row">
-                  {restaurant.name}
-              </TableCell>
-              <TableCell>{restaurant.hasBrunch ? 'Yes' : 'No'}</TableCell>
-              <TableCell>{restaurant.isFoodCart ? 'Yes' : 'No' }</TableCell>
-              <TableCell>{restaurant.menuType}</TableCell>
-              <TableCell>{restaurant.notes}</TableCell>
+    <Box sx={{ maxWidth: '100vw', overflowX: 'auto' }}>
+      <TableContainer component={Paper} sx={{ minWidth: '700px' }}>
+        <Table
+          sx={{ minWidth: 650 }}
+          aria-label="restaurants table"
+        >
+          <TableHead>
+            <TableRow>
+              <TableCell>Name</TableCell>
+              <TableCell>Vegan?</TableCell>
+              <TableCell>Where?</TableCell>
+              <TableCell>Food Cart?</TableCell>
+              <TableCell>Brunch?</TableCell>
+              <TableCell>Cuisine</TableCell>
+              <TableCell>Favorite</TableCell>
+              <TableCell>Notes</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </TableHead>
+          <TableBody>
+            {restaurants.map((restaurant) => (
+              <TableRow
+                key={restaurant.name}
+                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+              >
+                <TableCell component="th" scope="row">
+                    {restaurant.name}
+                </TableCell>
+                <TableCell>{restaurant.menuType}</TableCell>
+                <TableCell>{restaurant.neighborhood}</TableCell>
+                <TableCell>{restaurant.isFoodCart ? 'Yes' : 'No' }</TableCell>
+                <TableCell>{restaurant.hasBrunch ? 'Yes' : 'No'}</TableCell>
+                <TableCell>{restaurant.cuisineType}</TableCell>
+                <TableCell>{restaurant.favoriteDish}</TableCell>
+                <TableCell>{restaurant.notes}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Box>
   )
 }

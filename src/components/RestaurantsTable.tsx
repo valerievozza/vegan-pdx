@@ -1,14 +1,43 @@
 import { useEffect, useState } from 'react';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Box from '@mui/material/Box';
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import Paper from '@mui/material/Paper';
+import type { GridValueGetter } from '@mui/x-data-grid';
 
 export default function RestaurantsTable() {
+  const columns: GridColDef[] = [
+    {
+      field: 'name',
+      headerName: 'Restaurant',
+
+      renderCell: (params) => {
+        const link = params.row?.link;
+        const name = params.row?.name;
+        return link ? (
+          <a href={link} target="_blank" rel="noopener noreferrer">
+            {name}
+          </a>
+        ) : (
+          name
+        );
+      },
+    },    
+    { field: 'menuType', headerName: 'Vegan?' },
+    { field: 'neighborhood', headerName: 'Where?' },
+    {
+      field: 'isFoodCart',
+      headerName: 'Cart?',
+      valueGetter: (params: GridValueGetter) => (params.row?.isFoodCart ? 'Yes' : 'No'),
+    },
+    {
+      field: 'hasBrunch',
+      headerName: 'Brunch?',
+      valueGetter: (params: GridValueGetter) => (params.row?.hasBrunch ? 'Yes' : 'No')
+    },
+    { field: 'cuisineType', headerName: 'Cuisine'},
+    { field: 'favoriteDish', headerName: 'Favorite '},
+    { field: 'notes', headerName: 'Notes '},
+  ]
+
   type Restaurant = {
     _id: string;
     name: string;
@@ -17,6 +46,7 @@ export default function RestaurantsTable() {
     hasBrunch?: boolean;
     haveVisited?: boolean;
     isFoodCart?: boolean;
+    isClosed?: boolean;
     menuType?: string;
     neighborhood?: string;
     notes?: string;
@@ -29,7 +59,13 @@ export default function RestaurantsTable() {
     fetch('/.netlify/functions/get-restaurants')
       .then(res => res.json())
       .then((data: Restaurant[]) => {
-        setRestaurants(data);
+        const widthIds = data.map(r => ({ ...r, id: r._id }));
+        
+        const sortedAndFiltered = widthIds
+          .filter(r => r.isClosed === false)
+          .sort((a, b) => a.name.localeCompare(b.name));
+        
+        setRestaurants(sortedAndFiltered);
       })
       .catch(err => console.error(err));
   }, []);
@@ -37,45 +73,11 @@ export default function RestaurantsTable() {
   console.log('restaurants', restaurants)
 
   return (
-    <Box sx={{ maxWidth: '100vw', overflowX: 'auto' }}>
-      <TableContainer component={Paper} sx={{ minWidth: '700px' }}>
-        <Table
-          sx={{ minWidth: 650 }}
-          aria-label="restaurants table"
-        >
-          <TableHead>
-            <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell>Vegan?</TableCell>
-              <TableCell>Where?</TableCell>
-              <TableCell>Food Cart?</TableCell>
-              <TableCell>Brunch?</TableCell>
-              <TableCell>Cuisine</TableCell>
-              <TableCell>Favorite</TableCell>
-              <TableCell>Notes</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {restaurants.map((restaurant) => (
-              <TableRow
-                key={restaurant.name}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                    {restaurant.name}
-                </TableCell>
-                <TableCell>{restaurant.menuType}</TableCell>
-                <TableCell>{restaurant.neighborhood}</TableCell>
-                <TableCell>{restaurant.isFoodCart ? 'Yes' : 'No' }</TableCell>
-                <TableCell>{restaurant.hasBrunch ? 'Yes' : 'No'}</TableCell>
-                <TableCell>{restaurant.cuisineType}</TableCell>
-                <TableCell>{restaurant.favoriteDish}</TableCell>
-                <TableCell>{restaurant.notes}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </Box>
+    <Paper sx={{ width: '100%' }}>
+      <DataGrid
+        rows={restaurants}
+        columns={columns}
+      />
+    </Paper>
   )
 }

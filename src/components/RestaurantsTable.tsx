@@ -44,10 +44,10 @@ export default function RestaurantsTable() {
         <TableHead>
           <TableRow>
             <TableCell>Name</TableCell>
-            <TableCell align="right">Brunch?</TableCell>
-            <TableCell align="right">Food Cart?</TableCell>
-            <TableCell align="right">Vegan?</TableCell>
-            <TableCell align="right">Notes</TableCell>
+            <TableCell>Brunch?</TableCell>
+            <TableCell>Food Cart?</TableCell>
+            <TableCell>Vegan?</TableCell>
+            <TableCell>Notes</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

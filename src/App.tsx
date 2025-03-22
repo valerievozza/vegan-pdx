@@ -4,8 +4,6 @@ import Restaurants from './pages/Restaurants';
 import './App.css'
 
 function App() {
-  // const [count, setCount] = useState(0)
-
   return (
     <>
       <BrowserRouter>

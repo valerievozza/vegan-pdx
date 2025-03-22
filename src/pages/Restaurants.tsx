@@ -1,5 +1,7 @@
-import RestaurantsTable from "../components/RestaurantsTable"
+import RestaurantsTable from '../components/RestaurantsTable';
 
 export default function Home() {
-    return <RestaurantsTable />
+  return (
+    <RestaurantsTable />
+  )
 }

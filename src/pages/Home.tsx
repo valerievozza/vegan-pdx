@@ -1,10 +1,9 @@
-import RestaurantsTable from "../components/RestaurantsTable";
+import Eateries from "../components/Eateries";
 
 export default function Home() {
   return (
     <div>
-      <h2>Vegan & vegan-friendly restaurants in Portland.</h2>
-      <RestaurantsTable />
+      <Eateries />
     </div>
   )
 }

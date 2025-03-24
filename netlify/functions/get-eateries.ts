@@ -11,16 +11,17 @@ export const handler: Handler = async () => {
       cachedDb = client.db('vegan-pdx');
     }
 
-    const restaurants = await cachedDb.collection('restaurants').find({}).toArray();
+    const eateries = await cachedDb.collection('eateries').find({}).toArray();
 
     return {
       statusCode: 200,
-      body: JSON.stringify(restaurants),
+      body: JSON.stringify(eateries),
     };
-  } catch (err: any) {
+  } catch (err: unknown) {
+    const errorMessage = err instanceof Error ? err.message : 'An unknown error occurred';
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: err.message }),
+      body: JSON.stringify({ error: errorMessage }),
     };
   }
 };

@@ -22,6 +22,7 @@ import AirportShuttleIcon from '@mui/icons-material/AirportShuttle';
 import BrunchDiningIcon from '@mui/icons-material/BrunchDining';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import RestaurantIcon from '@mui/icons-material/Restaurant';
+// import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
 import { Eatery } from '../models/Eatery';
 
@@ -100,11 +101,12 @@ export default function EateryCard({ eatery }: Props) {
           spacing={1}
           sx={{ mt: 2 }}
         >
-          <Chip
-            label={eatery.neighborhood}
-            icon={<LocationOnIcon />}
-            size="small"
-          />
+          {eatery.neighborhood &&
+            <Chip
+              label={eatery.neighborhood}
+              icon={<LocationOnIcon />}
+              size="small"
+            />}
           <Chip
             label={eatery.menuType}
             icon={<RestaurantIcon />}
@@ -127,19 +129,33 @@ export default function EateryCard({ eatery }: Props) {
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           <List dense={true}>
-            <ListItem>
-              <ListItemIcon>
-                <FavoriteIcon />
-              </ListItemIcon>
-              <ListItemText primary="Favorite" secondary={eatery.favoriteDish} />
-            </ListItem>
-            <ListItem>
-              <ListItemIcon>
-                <InfoIcon />
-              </ListItemIcon>
-              <ListItemText primary="Notes" secondary={eatery.notes} />
-            </ListItem>
+            {/* {eatery.hours &&
+              <ListItem>
+                <ListItemIcon>
+                  <AccessTimeIcon />
+                </ListItemIcon>
+                <ListItemText primary="Hours" secondary="Hours here!" />
+              </ListItem>} */}
+            {eatery.favoriteDish &&
+              <ListItem>
+                <ListItemIcon>
+                  <FavoriteIcon />
+                </ListItemIcon>
+                <ListItemText primary="Recommended Dishes" secondary={eatery.favoriteDish} />
+              </ListItem>}
+            {eatery.notes &&
+              <ListItem>
+                <ListItemIcon>
+                  <InfoIcon />
+                </ListItemIcon>
+                <ListItemText primary="More Info" secondary={eatery.notes} />
+              </ListItem>
+            }
           </List>
+          {!eatery.favoriteDish && !eatery.notes &&
+          <a href={eatery.link} target="_blank" rel="noopener noreferrer">
+            {eatery.link}
+          </a>}
         </CardContent>
       </Collapse>
     </Card>

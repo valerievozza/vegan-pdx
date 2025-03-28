@@ -68,6 +68,7 @@ export default function EateriesTable({ eateries }: Props) {
       <DataGrid
         rows={eateries}
         columns={columns}
+        loading={!eateries.length}
       />
     </Paper>
   )

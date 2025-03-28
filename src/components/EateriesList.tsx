@@ -1,12 +1,17 @@
 import { useEffect, useState } from 'react';
+
+import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import CircularProgress from '@mui/material/CircularProgress';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Stack from '@mui/material/Stack';
+
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import SortIcon from '@mui/icons-material/Sort';
+
 import EateryCard from './EateryCard';
 import type { Eatery } from '../models/Eatery';
 
@@ -89,6 +94,14 @@ export default function EateriesList({ eateries }: Props) {
           <EateryCard key={eatery._id} eatery={eatery} />
         ))}
       </Stack>
+      {!eateries.length &&
+        <Backdrop
+          open={!eateries.length}
+          sx={(theme) => ({ color: '#fff', zIndex: theme.zIndex.drawer + 1 })}
+        >
+          <CircularProgress color="inherit" />
+        </Backdrop>
+      }
     </>
   )
 }

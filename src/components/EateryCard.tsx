@@ -100,11 +100,12 @@ export default function EateryCard({ eatery }: Props) {
           spacing={1}
           sx={{ mt: 2 }}
         >
-          <Chip
-            label={eatery.neighborhood}
-            icon={<LocationOnIcon />}
-            size="small"
-          />
+          {eatery.neighborhood &&
+            <Chip
+              label={eatery.neighborhood}
+              icon={<LocationOnIcon />}
+              size="small"
+            />}
           <Chip
             label={eatery.menuType}
             icon={<RestaurantIcon />}
